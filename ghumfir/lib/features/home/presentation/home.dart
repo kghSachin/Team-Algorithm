@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:ghumfir/features/home/datasource/place_data_source.dart';
 import 'package:ghumfir/features/home/presentation/city_detail_view.dart';
 import 'package:ghumfir/features/home/presentation/widgets/city_widget.dart';
 import 'package:ghumfir/features/home/presentation/widgets/place_to_visit_widget.dart';
+import 'package:ghumfir/features/home/provider/get_place_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HomePage extends ConsumerWidget {
@@ -10,8 +12,10 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final placeProvider = ref.watch(getPlacesProvider);
     return Scaffold(
-      body: CustomScrollView(
+        body: placeProvider.when(data: (data) {
+      return CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
             expandedHeight: 200.0,
@@ -56,8 +60,11 @@ class HomePage extends ConsumerWidget {
               trailing: [
                 IconButton(
                   icon: Icon(Icons.mic, color: Colors.grey[600]),
-                  onPressed: () {
+                  onPressed: () async {
                     // Add voice search functionality
+                    final res = await getPlaces();
+                    print("Voice search result");
+                    print(res);
                   },
                 ),
               ],
@@ -79,14 +86,22 @@ class HomePage extends ConsumerWidget {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => CityDetailView()));
                         },
-                        child: CityWidget()));
+                        child: CityWidget(
+                          cityDescription: data?[index].location ?? "",
+                          cityName: data?[index].name ?? "",
+                          cityPhoto: data?[index].photo ?? "",
+                        )));
               },
-              childCount: 20,
+              childCount: data?.length,
             ),
           ),
           //
         ],
-      ),
-    );
+      );
+    }, error: (Object error, StackTrace stackTrace) {
+      return Center(child: Text("Error: $error"));
+    }, loading: () {
+      return Center(child: CircularProgressIndicator());
+    }));
   }
 }

@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ghumfir/features/home/presentation/widgets/place_to_visit_widget.dart';
@@ -5,7 +6,14 @@ import 'package:ghumfir/themes/colors.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class CityWidget extends ConsumerWidget {
-  const CityWidget({super.key});
+  final String cityName;
+  final String cityPhoto;
+  final String cityDescription;
+  const CityWidget({
+    required this.cityName,
+    required this.cityPhoto,
+    required this.cityDescription,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,7 +44,7 @@ class CityWidget extends ConsumerWidget {
                     topRight: Radius.circular(12),
                   ),
                   child: CachedNetworkImage(
-                      imageUrl: photoList[3],
+                      imageUrl: cityPhoto,
                       fit: BoxFit.cover,
                       errorWidget: (context, url, error) {
                         return Center(child: Icon(Icons.error));
@@ -46,7 +54,7 @@ class CityWidget extends ConsumerWidget {
             Row(
               children: [
                 Text(
-                  "Biratnagar",
+                  cityName,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 Spacer(),
@@ -68,7 +76,7 @@ class CityWidget extends ConsumerWidget {
             ),
             const SizedBox(height: 2),
             Text(
-              "Koshi Provience, Nepal",
+              cityDescription,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Colors.grey,
                   ),
