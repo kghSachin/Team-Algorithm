@@ -1,10 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:ghumfir/features/home/presentation/widgets/place_to_visit_widget.dart';
 import 'package:ghumfir/themes/colors.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class CityWidget extends ConsumerWidget {
-
-  const CityWidget( {super.key});
+  const CityWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,15 +31,16 @@ class CityWidget extends ConsumerWidget {
               height: 200,
               width: double.maxFinite,
               child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(12),
-                  topRight: Radius.circular(12),
-                ),
-                child: Image.network(
-                  "https://th.bing.com/th/id/OIP.o9AUafJWmDQqi2UWdd4yVwHaFj?rs=1&pid=ImgDetMain",
-                  fit: BoxFit.fill,
-                ),
-              ),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(12),
+                    topRight: Radius.circular(12),
+                  ),
+                  child: CachedNetworkImage(
+                      imageUrl: photoList[3],
+                      fit: BoxFit.cover,
+                      errorWidget: (context, url, error) {
+                        return Center(child: Icon(Icons.error));
+                      })),
             ),
             const SizedBox(height: 8),
             Row(

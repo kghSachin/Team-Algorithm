@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ghumfir/features/egallery/e_gallery.dart';
 import 'package:ghumfir/features/home/presentation/home.dart';
+import 'package:ghumfir/features/maps/map_view.dart';
+import 'package:ghumfir/features/profile/profile.dart';
 import 'package:ghumfir/res/strings.dart';
 import 'package:ghumfir/themes/colors.dart';
 import 'package:ghumfir/themes/my_theme.dart';
@@ -17,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Ghumfir',
       theme: AppTheme.lightTheme,
       home: const MainPage(),
     );
@@ -32,8 +35,9 @@ class MainPage extends ConsumerWidget {
     final navbarIndex = ref.watch(navbarIndexProvider);
     const List<Widget> _pages = <Widget>[
       HomePage(),
-      HomePage(),
-      HomePage(),
+      MyMapPage(title: ""),
+      EGallery(),
+      AccountScreen(),
     ];
     return Scaffold(
       body: IndexedStack(
@@ -50,21 +54,27 @@ class MainPage extends ConsumerWidget {
           unselectedItemColor: Colors.grey,
           items: [
             BottomNavigationBarItem(
-                icon: SvgPicture.asset(AppStrings.home,
+                icon: SvgPicture.asset(imageStrings.home,
                     colorFilter: ColorFilter.mode(
                         navbarIndex == 0 ? AppColors.blue : Colors.grey,
                         BlendMode.srcIn)),
                 label: 'Home'),
             BottomNavigationBarItem(
-                icon: SvgPicture.asset(AppStrings.gallery,
+                icon: SvgPicture.asset(imageStrings.map,
                     colorFilter: ColorFilter.mode(
                         navbarIndex == 1 ? AppColors.blue : Colors.grey,
                         BlendMode.srcIn)),
-                label: 'egallery'),
+                label: 'map'),
             BottomNavigationBarItem(
-                icon: SvgPicture.asset(AppStrings.account,
+                icon: SvgPicture.asset(imageStrings.gallery,
                     colorFilter: ColorFilter.mode(
                         navbarIndex == 2 ? AppColors.blue : Colors.grey,
+                        BlendMode.srcIn)),
+                label: 'eGallery'),
+            BottomNavigationBarItem(
+                icon: SvgPicture.asset(imageStrings.account,
+                    colorFilter: ColorFilter.mode(
+                        navbarIndex == 3 ? AppColors.blue : Colors.grey,
                         BlendMode.srcIn)),
                 label: 'Profile'),
           ]),

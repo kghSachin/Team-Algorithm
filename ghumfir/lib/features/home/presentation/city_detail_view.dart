@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:ghumfir/features/home/presentation/widgets/city_widget.dart';
+import 'package:ghumfir/features/home/presentation/place_detail_view.dart';
+import 'package:ghumfir/features/home/presentation/widgets/bottom_model_sheet.dart';
 import 'package:ghumfir/features/home/presentation/widgets/place_to_visit_widget.dart';
 import 'package:ghumfir/themes/colors.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -21,10 +22,12 @@ class CityDetailView extends ConsumerWidget {
               collapseMode: CollapseMode.pin,
               titlePadding: EdgeInsets.only(bottom: 16, left: 16, right: 16),
               centerTitle: true,
-              background: Image.network(
-                "https://th.bing.com/th/id/OIP.o9AUafJWmDQqi2UWdd4yVwHaFj?rs=1&pid=ImgDetMain",
-                fit: BoxFit.cover,
-              ),
+              background: CachedNetworkImage(
+                  imageUrl: photoList[0],
+                  fit: BoxFit.cover,
+                  errorWidget: (context, url, error) {
+                    return Center(child: Icon(Icons.error));
+                  }),
               title: LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
                   return AnimatedOpacity(
@@ -72,15 +75,10 @@ class CityDetailView extends ConsumerWidget {
                 (BuildContext context, int index) {
                   return GestureDetector(
                     onTap: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (_) => ImageDetailScreen(
-                      //       imageUrl: imgList[index],
-                      //       tag: 'imageHero$index',
-                      //     ),
-                      //   ),
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => PlaceDetailView()),
+                      );
                     },
                     child: PlaceToVisitContainer(
                       index: index,
@@ -98,7 +96,14 @@ class CityDetailView extends ConsumerWidget {
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 24.0, left: 30, right: 30),
         child: MaterialButton(
-          onPressed: () {},
+          onPressed: () {
+            showModalBottomSheet(
+                // isScrollControlled: true,
+                useSafeArea: true,
+                showDragHandle: true,
+                context: context,
+                builder: (context) => GuideShowWidget());
+          },
           color: AppColors.blue,
           child: SizedBox(
             height: 56,

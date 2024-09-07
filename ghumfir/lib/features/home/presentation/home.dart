@@ -1,7 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ghumfir/features/home/presentation/city_detail_view.dart';
 import 'package:ghumfir/features/home/presentation/widgets/city_widget.dart';
-import 'package:ghumfir/res/strings.dart';
+import 'package:ghumfir/features/home/presentation/widgets/place_to_visit_widget.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HomePage extends ConsumerWidget {
@@ -20,10 +21,13 @@ class HomePage extends ConsumerWidget {
               collapseMode: CollapseMode.pin,
               titlePadding: EdgeInsets.only(bottom: 16, left: 16, right: 16),
               centerTitle: true,
-              background: Image.network(
-                "https://th.bing.com/th/id/OIP.o9AUafJWmDQqi2UWdd4yVwHaFj?rs=1&pid=ImgDetMain",
-                fit: BoxFit.cover,
-              ),
+              // background: Image.network(photoList[1]),
+              background: CachedNetworkImage(
+                  imageUrl: photoList[1],
+                  fit: BoxFit.cover,
+                  errorWidget: (context, url, error) {
+                    return Center(child: Icon(Icons.error));
+                  }),
               title: LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
                   return AnimatedOpacity(
