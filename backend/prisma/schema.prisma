@@ -84,6 +84,7 @@ model Tourist {
 }
 
 enum Role {
+  ADMIN
   TOURIST
   GUIDE
 }
