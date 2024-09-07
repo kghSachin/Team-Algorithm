@@ -1,1 +1,7 @@
-export const { PORT } = process.env;
+export const {
+  PORT,
+  ACCESS_TOKEN_SECRET,
+  CLOUDINARY_API_KEY,
+  CLOUDINARY_CLOUD_NAME,
+  CLOUDINARY_CLOUD_SECRET,
+} = process.env;

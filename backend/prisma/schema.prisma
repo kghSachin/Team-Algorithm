@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,35 +7,71 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Tourist {
-  id      Int    @id @default(autoincrement())
-  email   String @unique
-  fname   String
-  lname   String
-  phone   String
-  members Int
-  guide   Guide?
-}
-
 model Guide {
   id           Int          @id @default(autoincrement())
   email        String       @unique
   fname        String
   lname        String
   phone        String
-  availability Availability
-
-  Tourist   Tourist? @relation(fields: [touristId], references: [id])
-  touristId Int?     @unique
+  password     String
+  photo        String       @default("https://support.hubstaff.com/profile-pictures-for-hubstaff-talent/")
+  availability Availability @default(Available)
+  Tourist      Tourist?     @relation(fields: [touristId], references: [id])
+  touristId    Int?         @unique
+  role         Role         @default(GUIDE)
+  ratings      Rating[]
 }
 
-model City {
-  id Int @id @default(autoincrement())
+model Place {
+  id           Int           @id @default(autoincrement())
+  name         String
+  location     String
+  photo        String
+  touristAreas TouristArea[]
+}
+
+model TouristArea {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  photo       String[]
+  rating      Int      @default(0)
+  place       Place    @relation(fields: [placeId], references: [id])
+  placeId     Int
+  Rating      Rating[]
+}
+
+model Rating {
+  id      Int     @id @default(autoincrement())
+  rating  Int     @default(0)
+  comment String?
+  tourist Tourist @relation(fields: [touristId], references: [id])
+  guide   Guide?  @relation(fields: [guideId], references: [id])
+
+  touristId Int
+  guideId   Int?
+
+  createdAt     DateTime     @default(now())
+  TouristArea   TouristArea? @relation(fields: [touristAreaId], references: [id])
+  touristAreaId Int?
+}
+
+model Tourist {
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
+  fname    String
+  lname    String
+  phone    String
+  members  Int
+  guide    Guide?
+  password String
+  role     Role     @default(TOURIST)
+  ratings  Rating[]
 }
 
 enum Role {
-  GUIDE
   TOURIST
+  GUIDE
 }
 
 enum Availability {

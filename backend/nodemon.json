@@ -1,5 +1,5 @@
 {
-    "watch":[".env",".ts"],
+    "watch":[".env","src"],
     "ext":".ts",
     "exec":"ts-node -r dotenv/config src/server.ts"
 }
