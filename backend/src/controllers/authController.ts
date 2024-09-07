@@ -5,6 +5,7 @@ import createHttpError from "http-errors";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import * as Config from "../config";
+import cloudinary, { uploadOnCloudinary } from "./../utils/cloudinary";
 
 export const login = async (
   req: Request,
@@ -31,7 +32,7 @@ export const login = async (
   const accessToken = jwt.sign(
     {
       id: user.id,
-      email: user.email,
+      role: user.role,
     },
     Config.ACCESS_TOKEN_SECRET!
   );
@@ -71,7 +72,7 @@ export const registerTourist = async (
   const accessToken = jwt.sign(
     {
       id: user.id,
-      email: user.email,
+      role: user.role,
     },
     Config.ACCESS_TOKEN_SECRET!
   );
@@ -95,26 +96,39 @@ export const registerGuide = async (
 ) => {
   let returnResponse: IReturnResponse;
   const { email, fname, lname, phone, password } = req.body;
+
   const emailExists = await prisma.guide.findUnique({ where: { email } });
   if (emailExists) {
     return next(createHttpError("400", "Email already taken"));
   }
   const hashedPw = await bcrypt.hash(password, 10);
+  const image = req.file;
+
+  if (!image) {
+    next(createHttpError(422, "image is a required field"));
+  }
+  
+  const uploaded = await uploadOnCloudinary(image!.path);
+  if (!uploaded) {
+    return next(createHttpError(400, "unable to upload image"));
+  }
   const user = await prisma.guide.create({
     data: {
       email,
       fname,
       lname,
       phone,
+      photo: uploaded[0]!.secure_url,
       password: hashedPw,
     },
   });
+
   if (!user) return next(createHttpError(500, "Internal Server error"));
   const { password: _, ...withoutPass } = user;
   const accessToken = jwt.sign(
     {
       id: user.id,
-      email: user.email,
+      role: user.role,
     },
     Config.ACCESS_TOKEN_SECRET!
   );

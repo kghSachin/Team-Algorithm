@@ -7,6 +7,55 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Guide {
+  id           Int          @id @default(autoincrement())
+  email        String       @unique
+  fname        String
+  lname        String
+  phone        String
+  password     String
+  photo        String       @default("https://support.hubstaff.com/profile-pictures-for-hubstaff-talent/")
+  availability Availability @default(Available)
+  Tourist      Tourist?     @relation(fields: [touristId], references: [id])
+  touristId    Int?         @unique
+  role         Role         @default(GUIDE)
+  ratings      Rating[]
+}
+
+model Place {
+  id           Int           @id @default(autoincrement())
+  name         String
+  location     String
+  photo        String
+  touristAreas TouristArea[]
+}
+
+model TouristArea {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  photo       String[]
+  rating      Int      @default(0)
+  place       Place    @relation(fields: [placeId], references: [id])
+  placeId     Int
+  Rating      Rating[]
+}
+
+model Rating {
+  id      Int     @id @default(autoincrement())
+  rating  Int     @default(0)
+  comment String?
+  tourist Tourist @relation(fields: [touristId], references: [id])
+  guide   Guide?  @relation(fields: [guideId], references: [id])
+
+  touristId Int
+  guideId   Int?
+
+  createdAt     DateTime     @default(now())
+  TouristArea   TouristArea? @relation(fields: [touristAreaId], references: [id])
+  touristAreaId Int?
+}
+
 model Tourist {
   id       Int      @id @default(autoincrement())
   email    String   @unique
@@ -18,40 +67,6 @@ model Tourist {
   password String
   role     Role     @default(TOURIST)
   ratings  Rating[]
-}
-
-model Guide {
-  id           Int          @id @default(autoincrement())
-  email        String       @unique
-  fname        String
-  lname        String
-  phone        String
-  password     String
-  availability Availability @default(Available)
-  Tourist      Tourist?     @relation(fields: [touristId], references: [id])
-  touristId    Int?         @unique
-  role         Role         @default(GUIDE)
-  ratings      Rating[]
-}
-
-model Place {
-  id       Int      @id @default(autoincrement())
-  name     String
-  location String
-  ratings  Rating[]
-}
-
-model Rating {
-  id        Int      @id @default(autoincrement())
-  rating    Int      @default(0)
-  comment   String?
-  tourist   Tourist  @relation(fields: [touristId], references: [id])
-  guide     Guide?   @relation(fields: [guideId], references: [id])
-  place     Place?   @relation(fields: [placeId], references: [id])
-  touristId Int
-  guideId   Int?
-  placeId   Int?
-  createdAt DateTime @default(now())
 }
 
 enum Role {

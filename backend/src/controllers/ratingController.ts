@@ -49,7 +49,7 @@ export const getRatingsForGuide = async (
   }
 };
 
-export const getRatingsForPlace = async (
+export const getRatingsForTouristArea = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -58,7 +58,7 @@ export const getRatingsForPlace = async (
 
   try {
     const ratings = await prisma.rating.findMany({
-      where: { placeId: Number(placeId) },
+      where: { touristAreaId: Number(placeId) },
       include: {
         tourist: {
           select: { fname: true, lname: true },
