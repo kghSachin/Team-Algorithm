@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:ghumfir/features/home/presentation/create_blog.dart';
 import 'package:ghumfir/features/home/presentation/widgets/place_to_visit_widget.dart';
 import 'package:ghumfir/res/info_string.dart';
 import 'package:ghumfir/themes/colors.dart';
@@ -65,7 +66,12 @@ class PlaceDetailView extends ConsumerWidget {
                               ?.copyWith(fontWeight: FontWeight.bold),
                         ),
                         OutlinedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => CreateBlog()));
+                            },
                             child: Text(
                               "Add Blog +",
                               style: TextStyle(color: AppColors.blue),

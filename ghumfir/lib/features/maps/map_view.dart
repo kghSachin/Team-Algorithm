@@ -71,12 +71,28 @@ class _MyMapPageState extends State<MyMapPage> {
                 onMapCreated: (GoogleMapController controller) {},
               ),
               Positioned(
-                  child: MaterialButton(
-                onPressed: () {},
-                child: Center(
-                  child: Icon(Icons.location_on),
-                ),
-              ))
+                  bottom: 110,
+                  right: 12,
+                  child: InkWell(
+                    splashColor: Colors.grey,
+                    onTap: () {},
+                    child: Container(
+                      height: 48,
+                      width: 48,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: const [
+                            BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 6,
+                                offset: Offset(0, 2))
+                          ]),
+                      child: Center(
+                        child: Icon(Icons.location_on),
+                      ),
+                    ),
+                  ))
             ],
           );
         },

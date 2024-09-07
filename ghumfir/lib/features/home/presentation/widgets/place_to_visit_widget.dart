@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -30,11 +31,14 @@ class PlaceToVisitContainer extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
-            child: Image.network(
-              photoList[index % 4],
+            child: CachedNetworkImage(
+              imageUrl: photoList[index % 4],
               fit: BoxFit.cover,
               height: 90,
               width: double.maxFinite,
+              errorWidget: (context, url, error) {
+                return Center(child: Icon(Icons.error));
+              },
             ),
           ),
           const SizedBox(height: 4),

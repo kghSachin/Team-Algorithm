@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ghumfir/features/home/presentation/widgets/place_to_visit_widget.dart';
+import 'package:ghumfir/features/profile/guide_profile.dart';
 import 'package:ghumfir/themes/colors.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -69,9 +70,14 @@ class GuideShowWidget extends ConsumerWidget {
                       Spacer(),
                       MaterialButton(
                         color: AppColors.blue,
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => GuideProfile()));
+                        },
                         child: Center(
-                          child: Text("Hire Guide"),
+                          child: Text("More Details"),
                         ),
                       )
                     ],
