@@ -20,6 +20,7 @@ model Guide {
   touristId    Int?         @unique
   role         Role         @default(GUIDE)
   ratings      Rating[]
+  blogs        Blog[]
 }
 
 model Place {
@@ -39,6 +40,7 @@ model TouristArea {
   place       Place    @relation(fields: [placeId], references: [id])
   placeId     Int
   Rating      Rating[]
+  blogs       Blog[]
 }
 
 model Rating {
@@ -54,6 +56,18 @@ model Rating {
   createdAt     DateTime     @default(now())
   TouristArea   TouristArea? @relation(fields: [touristAreaId], references: [id])
   touristAreaId Int?
+}
+
+model Blog {
+  id            Int         @id @default(autoincrement())
+  title         String
+  content       String
+  images        String[]
+  guide         Guide       @relation(fields: [guideId], references: [id])
+  guideId       Int
+  touristArea   TouristArea @relation(fields: [touristAreaId], references: [id])
+  touristAreaId Int
+  createdAt     DateTime    @default(now())
 }
 
 model Tourist {
