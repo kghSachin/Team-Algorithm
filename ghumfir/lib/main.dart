@@ -60,7 +60,7 @@ class MainPage extends ConsumerWidget {
                     colorFilter: ColorFilter.mode(
                         navbarIndex == 1 ? AppColors.blue : Colors.grey,
                         BlendMode.srcIn)),
-                label: 'Search'),
+                label: 'egallery'),
             BottomNavigationBarItem(
                 icon: SvgPicture.asset(AppStrings.account,
                     colorFilter: ColorFilter.mode(

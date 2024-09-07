@@ -37,6 +37,7 @@ dependencies:
   flutter_svg: ^2.0.10+1
   riverpod: ^2.5.1
   hooks_riverpod: ^2.5.2
+  flutter_rating_bar: ^4.0.1
 
 dev_dependencies:
   flutter_test:
