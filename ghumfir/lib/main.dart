@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ghumfir/features/home/presentation/home.dart';
 import 'package:ghumfir/res/strings.dart';
 import 'package:ghumfir/themes/colors.dart';
+import 'package:ghumfir/themes/my_theme.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 void main() {
@@ -17,10 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.lightTheme,
       home: const MainPage(),
     );
   }
@@ -38,12 +36,12 @@ class MainPage extends ConsumerWidget {
       HomePage(),
     ];
     return Scaffold(
-      body: const IndexedStack(
-        index: 0,
+      body: IndexedStack(
+        index: navbarIndex,
         children: _pages,
       ),
       bottomNavigationBar: BottomNavigationBar(
-          currentIndex: 0,
+          currentIndex: navbarIndex,
           onTap: (int index) {
             ref.read(navbarIndexProvider.notifier).state = index;
           },
