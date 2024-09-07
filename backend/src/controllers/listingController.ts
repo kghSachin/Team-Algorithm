@@ -9,6 +9,9 @@ export const createPlaceListing = async (
   res: Response,
   next: NextFunction
 ) => {
+  if (req.user.role !== "ADMIN") {
+    return next(createHttpError(401, "unauthorized"));
+  }
   let returnResponse: IReturnResponse;
   const { name, location } = req.body;
   const image = req.file;
@@ -40,6 +43,9 @@ export const createTareaListing = async (
   res: Response,
   next: NextFunction
 ) => {
+  if (req.user.role !== "ADMIN") {
+    return next(createHttpError(401, "unauthorized"));
+  }
   let returnResponse: IReturnResponse;
   const placeId = Number(req.params.id);
   const files = req.files as Express.Multer.File[];
