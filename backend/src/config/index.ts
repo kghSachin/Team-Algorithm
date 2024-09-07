@@ -1,1 +1,1 @@
-export const { PORT } = process.env;
+export const { PORT, ACCESS_TOKEN_SECRET } = process.env;

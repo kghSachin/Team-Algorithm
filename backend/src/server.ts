@@ -1,9 +1,7 @@
 import * as Config from "./config";
 
 import app from "./app";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "./utils/prisma";
 
 prisma
   .$connect()
@@ -15,5 +13,4 @@ prisma
   })
   .catch((err) => {
     console.log(err);
-    
   });

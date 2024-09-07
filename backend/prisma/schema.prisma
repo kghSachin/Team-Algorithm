@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,13 +8,16 @@ datasource db {
 }
 
 model Tourist {
-  id      Int    @id @default(autoincrement())
-  email   String @unique
-  fname   String
-  lname   String
-  phone   String
-  members Int
-  guide   Guide?
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
+  fname    String
+  lname    String
+  phone    String
+  members  Int
+  guide    Guide?
+  password String
+  role     Role     @default(TOURIST)
+  ratings  Rating[]
 }
 
 model Guide {
@@ -29,18 +26,37 @@ model Guide {
   fname        String
   lname        String
   phone        String
-  availability Availability
-  Tourist   Tourist? @relation(fields: [touristId], references: [id])
-  touristId Int?     @unique
+  password     String
+  availability Availability @default(Available)
+  Tourist      Tourist?     @relation(fields: [touristId], references: [id])
+  touristId    Int?         @unique
+  role         Role         @default(GUIDE)
+  ratings      Rating[]
 }
 
-model City {
-  id Int @id @default(autoincrement())
+model Place {
+  id       Int      @id @default(autoincrement())
+  name     String
+  location String
+  ratings  Rating[]
+}
+
+model Rating {
+  id        Int      @id @default(autoincrement())
+  rating    Int      @default(0)
+  comment   String?
+  tourist   Tourist  @relation(fields: [touristId], references: [id])
+  guide     Guide?   @relation(fields: [guideId], references: [id])
+  place     Place?   @relation(fields: [placeId], references: [id])
+  touristId Int
+  guideId   Int?
+  placeId   Int?
+  createdAt DateTime @default(now())
 }
 
 enum Role {
-  GUIDE
   TOURIST
+  GUIDE
 }
 
 enum Availability {
