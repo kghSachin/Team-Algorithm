@@ -7,16 +7,10 @@ export const submitRating = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { touristId, guideId, placeId, rating, comment } = req.body;
-
   try {
     const newRating = await prisma.rating.create({
       data: {
-        rating,
-        comment,
-        touristId,
-        guideId,
-        placeId,
+        ...req.body,
       },
     });
 
@@ -24,8 +18,8 @@ export const submitRating = async (
       status: "success",
       data: newRating,
     });
-  } catch (error) {
-    next(createHttpError(500, "Failed to submit rating"));
+  } catch (error: any) {
+    next(createHttpError(500, error.message));
   }
 };
 
