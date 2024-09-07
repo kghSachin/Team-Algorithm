@@ -30,7 +30,6 @@ model Guide {
   lname        String
   phone        String
   availability Availability
-
   Tourist   Tourist? @relation(fields: [touristId], references: [id])
   touristId Int?     @unique
 }
