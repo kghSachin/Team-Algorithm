@@ -12,6 +12,7 @@ prisma
     app.listen(Config.PORT!, () => {
       console.log(`Server is running at port ${Config.PORT}`);
     });
+    
   })
   .catch((err) => {
     console.log(err);
