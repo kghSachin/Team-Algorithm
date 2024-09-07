@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Tourist {
+  id      Int    @id @default(autoincrement())
+  email   String @unique
+  fname   String
+  lname   String
+  phone   String
+  members Int
+  guide   Guide?
+}
+
+model Guide {
+  id           Int          @id @default(autoincrement())
+  email        String       @unique
+  fname        String
+  lname        String
+  phone        String
+  availability Availability
+
+  Tourist   Tourist? @relation(fields: [touristId], references: [id])
+  touristId Int?     @unique
+}
+
+model City {
+  id Int @id @default(autoincrement())
+}
+
+enum Role {
+  GUIDE
+  TOURIST
+}
+
+enum Availability {
+  Available
+  Unavailable
+}
