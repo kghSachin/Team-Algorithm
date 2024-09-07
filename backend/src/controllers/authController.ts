@@ -19,7 +19,6 @@ export const login = async (
   } else if (role === "GUIDE") {
     user = await prisma.guide.findUnique({ where: { email } });
   }
-
   if (!user) {
     return next(createHttpError(400, "Email does not exist"));
   }
@@ -29,8 +28,15 @@ export const login = async (
     return next(createHttpError(400, "Incorrect User credentials"));
   }
   const { password: _, ...withoutPass } = user;
+  const accessToken = jwt.sign(
+    {
+      id: user.id,
+      email: user.email,
+    },
+    Config.ACCESS_TOKEN_SECRET!
+  );
   returnResponse = {
-    data: withoutPass,
+    data: { ...withoutPass, accessToken },
     message: `${role} logged in Successfully`,
     status: "success",
   };
@@ -44,6 +50,11 @@ export const registerTourist = async (
 ) => {
   let returnResponse: IReturnResponse;
   const { email, fname, lname, phone, members, password } = req.body;
+  const emailExists = await prisma.tourist.findUnique({ where: { email } });
+  if (emailExists) {
+    return next(createHttpError("400", "Email already taken"));
+  }
+
   const hashedPw = await bcrypt.hash(password, 10);
   const user = await prisma.tourist.create({
     data: {
@@ -55,6 +66,7 @@ export const registerTourist = async (
       password: hashedPw,
     },
   });
+
   if (!user) return next(createHttpError(500, "Internal Server error"));
   const accessToken = jwt.sign(
     {
@@ -63,8 +75,11 @@ export const registerTourist = async (
     },
     Config.ACCESS_TOKEN_SECRET!
   );
+
+  const { password: _, ...withoutPass } = user;
   returnResponse = {
     data: {
+      ...withoutPass,
       accessToken,
     },
     message: `${user.role} successfully logged in`,
@@ -79,7 +94,11 @@ export const registerGuide = async (
   next: NextFunction
 ) => {
   let returnResponse: IReturnResponse;
-  const { email, fname, lname, phone, members, password } = req.body;
+  const { email, fname, lname, phone, password } = req.body;
+  const emailExists = await prisma.guide.findUnique({ where: { email } });
+  if (emailExists) {
+    return next(createHttpError("400", "Email already taken"));
+  }
   const hashedPw = await bcrypt.hash(password, 10);
   const user = await prisma.guide.create({
     data: {
@@ -91,6 +110,7 @@ export const registerGuide = async (
     },
   });
   if (!user) return next(createHttpError(500, "Internal Server error"));
+  const { password: _, ...withoutPass } = user;
   const accessToken = jwt.sign(
     {
       id: user.id,
@@ -100,6 +120,7 @@ export const registerGuide = async (
   );
   returnResponse = {
     data: {
+      ...withoutPass,
       accessToken,
     },
     message: `${user.role} successfully logged in`,
