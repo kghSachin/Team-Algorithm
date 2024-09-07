@@ -40,7 +40,6 @@ export const createTareaListing = async (
   res: Response,
   next: NextFunction
 ) => {
-  console.log("hi");
   let returnResponse: IReturnResponse;
   const placeId = Number(req.params.id);
   const files = req.files as Express.Multer.File[];
@@ -119,5 +118,51 @@ export const getAllTouristArea = async (
     message: "Tourist Area fetched successfully",
     status: "success",
   };
+  return res.status(200).json(returnResponse);
+};
+
+export const getAllguides = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  let returnResponse: IReturnResponse;
+  const guides = await prisma.guide.findMany();
+  returnResponse = {
+    data: guides,
+    message: "guides fetched successfully",
+    status: "success",
+  };
+  return res.status(200).json(returnResponse);
+};
+
+export const searchCity = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { name } = req.query;
+  const limit = parseInt(req.query.limit as string) || 4;
+  const skip = parseInt(req.query.skip as string) || 0;
+  if (!name) {
+    return next(createHttpError(400, "City name is required"));
+  }
+
+  const places = await prisma.place.findMany({
+    where: {
+      name: {
+        startsWith: name as string,
+        mode: "insensitive",
+      },
+    },
+    take: limit,
+    skip: skip,
+  });
+  const returnResponse: IReturnResponse = {
+    data: places,
+    message: "Places fetched successfully",
+    status: "success",
+  };
+
   return res.status(200).json(returnResponse);
 };
