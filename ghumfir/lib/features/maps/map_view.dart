@@ -1,10 +1,10 @@
 import 'package:custom_map_markers/custom_map_markers.dart';
 import 'package:flutter/material.dart';
+import 'package:ghumfir/features/maps/bottom_sheet_widget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MyMapPage extends StatefulWidget {
-  const MyMapPage({Key? key, required this.title}) : super(key: key);
-  final String title;
+  const MyMapPage({Key? key}) : super(key: key);
 
   @override
   State<MyMapPage> createState() => _MyMapPageState();
@@ -39,10 +39,6 @@ class _MyMapPageState extends State<MyMapPage> {
           child: _customMarker('C', Colors.green)),
       MarkerData(
           marker:
-              Marker(markerId: const MarkerId('id-4'), position: locations[3]),
-          child: _customMarker2('D', Colors.purple)),
-      MarkerData(
-          marker:
               Marker(markerId: const MarkerId('id-5'), position: locations[4]),
           child: _customMarker('A', Colors.blue)),
     ];
@@ -53,7 +49,20 @@ class _MyMapPageState extends State<MyMapPage> {
     return Scaffold(
       body: CustomGoogleMapMarkerBuilder(
         //screenshotDelay: const Duration(seconds: 4),
-        customMarkers: _customMarkers,
+        customMarkers: [
+          ...List.generate(20, (index) {
+            return MarkerData(
+                marker: Marker(
+                    onTap: () => showBottomSheet(
+                        showDragHandle: true,
+                        context: context,
+                        builder: (context) => MapInfoBottomSheet()),
+                    markerId: MarkerId('id-$index'),
+                    position: locations[index % 5]),
+                child: _customMarker('${index % 2 == 0 ? "H" : "V"}',
+                    index % 2 == 0 ? Colors.black : Colors.amber));
+          })
+        ],
         builder: (BuildContext context, Set<Marker>? markers) {
           if (markers == null) {
             return const Center(child: CircularProgressIndicator());
@@ -120,37 +129,6 @@ class _MyMapPageState extends State<MyMapPage> {
           ),
         )
       ],
-    );
-  }
-
-  _customMarker2(String symbol, Color color) {
-    return Container(
-      width: 30,
-      height: 30,
-      margin: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-          border: Border.all(color: color, width: 2),
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
-          boxShadow: [BoxShadow(color: color, blurRadius: 6)]),
-      child: Center(child: Text(symbol)),
-    );
-  }
-
-  _customMarker3(String text, Color color) {
-    return Container(
-      margin: const EdgeInsets.all(8),
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-          border: Border.all(color: color, width: 2),
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(4),
-          boxShadow: [BoxShadow(color: color, blurRadius: 6)]),
-      child: Center(
-          child: Text(
-        text,
-        textAlign: TextAlign.center,
-      )),
     );
   }
 }

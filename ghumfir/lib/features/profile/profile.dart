@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ghumfir/features/profile/docs_page.dart';
 import 'package:ghumfir/features/profile/widgets/list_widet.dart';
 import 'package:ghumfir/features/profile/widgets/prefered_sized.dart';
 import 'package:ghumfir/res/strings.dart';
@@ -166,15 +167,39 @@ class AccountScreen extends ConsumerWidget {
                   ListItem(
                       title: "About Us",
                       avatarText: imageStrings.loadWallet,
-                      onTap: () {}),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => DocumentPage(
+                                    title: "About Us",
+                                    excerpt:
+                                        "This is a beautiful place to visit. You can enjoy the view of the mountains and the river.")));
+                      }),
                   ListItem(
                       title: "Terms & Conditions",
                       avatarText: imageStrings.withDraw,
-                      onTap: () {}),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => DocumentPage(
+                                    title: "Terms and Conditions",
+                                    excerpt:
+                                        "This is a beautiful place to visit. You can enjoy the view of the mountains and the river.")));
+                      }),
                   ListItem(
                       title: "Privacy Policy",
                       avatarText: imageStrings.withDraw,
-                      onTap: () {}),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => DocumentPage(
+                                    title: "Privacy Policy",
+                                    excerpt:
+                                        "This is a beautiful place to visit. You can enjoy the view of the mountains and the river.")));
+                      }),
                 ],
               ),
               const SizedBox(

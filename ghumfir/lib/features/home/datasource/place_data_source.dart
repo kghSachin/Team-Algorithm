@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ghumfir/features/home/model/faous_place_model.dart';
 import 'package:ghumfir/features/home/model/place_model.dart';
 import "package:http/http.dart" as http;
 
@@ -33,4 +34,21 @@ Future<List<PlaceModel>?> getPlaces() async {
   //     throw Exception("Failed to load places");
   //   }
   // });
+}
+
+Future<List<FamousPlaceModel>?> getFamousPlace(int id) async {
+  try {
+    String url = "http://192.168.0.108:8000/api/listing/get/";
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      final res = jsonDecode(response.body);
+      print(res);
+      return res["data"]
+          .map<FamousPlaceModel>((place) => FamousPlaceModel.fromMap(place))
+          .toList();
+    }
+    return null;
+  } catch (error) {
+    throw Exception("Failed to load famous places");
+  }
 }

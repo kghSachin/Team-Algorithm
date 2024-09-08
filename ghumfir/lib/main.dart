@@ -35,7 +35,7 @@ class MainPage extends ConsumerWidget {
     final navbarIndex = ref.watch(navbarIndexProvider);
     const List<Widget> _pages = <Widget>[
       HomePage(),
-      MyMapPage(title: ""),
+      MyMapPage(),
       EGallery(),
       AccountScreen(),
     ];
