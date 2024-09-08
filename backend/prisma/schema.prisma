@@ -14,7 +14,7 @@ model Guide {
   lname        String
   phone        String
   password     String
-  photo        String       @default("https://support.hubstaff.com/profile-pictures-for-hubstaff-talent/")
+  photo        String?      @default("https://support.hubstaff.com/profile-pictures-for-hubstaff-talent/")
   availability Availability @default(Available)
   Tourist      Tourist?     @relation(fields: [touristId], references: [id])
   touristId    Int?         @unique

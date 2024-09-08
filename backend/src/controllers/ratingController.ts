@@ -14,6 +14,7 @@ export const submitRating = async (
     const newRating = await prisma.rating.create({
       data: {
         ...req.body,
+        touristId: req.user.id,
       },
     });
 
