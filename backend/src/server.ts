@@ -5,7 +5,7 @@ import prisma from "./utils/prisma";
 
 prisma
   .$connect()
-  .then(() => {
+  .then(async () => {
     console.log("Database successfully connected and running");
     app.listen(Config.PORT!, () => {
       console.log(`Server is running at port ${Config.PORT}`);

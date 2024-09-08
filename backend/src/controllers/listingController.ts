@@ -166,7 +166,27 @@ export const searchCity = async (
   });
   const returnResponse: IReturnResponse = {
     data: places,
-    message: "Places fetched successfully",
+    message: "Places searched successfully",
+    status: "success",
+  };
+
+  return res.status(200).json(returnResponse);
+};
+
+export const getSingleguide = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const guideId = parseInt(req.params.id);
+  const result = await prisma.guide.findMany({
+    where: {
+      id: guideId,
+    },
+  });
+  const returnResponse: IReturnResponse = {
+    data: result,
+    message: "Places searched successfully",
     status: "success",
   };
 

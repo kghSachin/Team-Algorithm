@@ -7,6 +7,7 @@ import {
   createPlaceListing,
   getAllguides,
   searchCity,
+  getSingleguide,
 } from "../controllers/listingController";
 import authenticate from "../middlewares/authenticate";
 import upload from "../middlewares/multer";
@@ -29,6 +30,7 @@ router
 router.route("/get").get(asyncErrorHandler(getAllPlaces));
 router.route("/get/:id").get(asyncErrorHandler(getAllTouristArea));
 router.route("/getguides").get(asyncErrorHandler(getAllguides));
+router.route("/getguide/:id").get(asyncErrorHandler(getSingleguide));
 router.route("/search").get(asyncErrorHandler(searchCity));
 
 export default router;
