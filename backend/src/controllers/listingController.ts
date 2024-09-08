@@ -50,7 +50,7 @@ export const createTareaListing = async (
   const placeId = Number(req.params.id);
   const files = req.files as Express.Multer.File[];
 
-  const { name, description } = req.body;
+  const { name, description, latitude, longitude } = req.body;
 
   const localFilePaths = files.map((file) => file.path);
   const photos = files.map((file) => file.path);
@@ -70,6 +70,15 @@ export const createTareaListing = async (
       description,
       placeId,
       photo: chitra,
+      latitude,
+      longitude,
+    },
+    include: {
+      Rating: {
+        select: {
+          rating: true,
+        },
+      },
     },
   });
 
@@ -133,7 +142,15 @@ export const getAllguides = async (
   next: NextFunction
 ) => {
   let returnResponse: IReturnResponse;
-  const guides = await prisma.guide.findMany();
+  const guides = await prisma.guide.findMany({
+    include: {
+      ratings: {
+        select: {
+          rating: true,
+        },
+      },
+    },
+  });
   returnResponse = {
     data: guides,
     message: "guides fetched successfully",
@@ -182,6 +199,13 @@ export const getSingleguide = async (
   const result = await prisma.guide.findMany({
     where: {
       id: guideId,
+    },
+    include: {
+      ratings: {
+        select: {
+          rating: true,
+        },
+      },
     },
   });
   const returnResponse: IReturnResponse = {

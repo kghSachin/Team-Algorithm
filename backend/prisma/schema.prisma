@@ -14,7 +14,7 @@ model Guide {
   lname        String
   phone        String
   password     String
-  photo        String       @default("https://support.hubstaff.com/profile-pictures-for-hubstaff-talent/")
+  photo        String?      @default("https://support.hubstaff.com/profile-pictures-for-hubstaff-talent/")
   availability Availability @default(Available)
   Tourist      Tourist?     @relation(fields: [touristId], references: [id])
   touristId    Int?         @unique
@@ -40,8 +40,8 @@ model TouristArea {
   place       Place    @relation(fields: [placeId], references: [id])
   placeId     Int
   Rating      Rating[]
-  latitude    Float
-  longitude   Float
+  latitude    Float?
+  longitude   Float?
   blogs       Blog[]
 }
 

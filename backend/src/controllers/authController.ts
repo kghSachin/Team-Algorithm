@@ -103,22 +103,29 @@ export const registerGuide = async (
   }
   const hashedPw = await bcrypt.hash(password, 10);
   const image = req.file;
-
-  if (!image) {
-    next(createHttpError(422, "image is a required field"));
+  let user;
+  if (image) {
+    const uploaded = await uploadOnCloudinary(image!.path);
+    if (!uploaded) {
+      return next(createHttpError(400, "unable to upload image"));
+    }
+    user = await prisma.guide.create({
+      data: {
+        email,
+        fname,
+        lname,
+        phone,
+        photo: uploaded[0]!.secure_url,
+        password: hashedPw,
+      },
+    });
   }
-  
-  const uploaded = await uploadOnCloudinary(image!.path);
-  if (!uploaded) {
-    return next(createHttpError(400, "unable to upload image"));
-  }
-  const user = await prisma.guide.create({
+  user = await prisma.guide.create({
     data: {
       email,
       fname,
       lname,
       phone,
-      photo: uploaded[0]!.secure_url,
       password: hashedPw,
     },
   });

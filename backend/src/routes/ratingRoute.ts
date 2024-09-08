@@ -6,5 +6,7 @@ import authenticate from "../middlewares/authenticate";
 const router = Router();
 
 router.route("/rating").post(asyncErrorHandler(authenticate),asyncErrorHandler(submitRating));
+// router.route("/rating").post(asyncErrorHandler(authenticate),asyncErrorHandler(submitRating));
+// router.route("/rating").post(asyncErrorHandler(authenticate),asyncErrorHandler(submitRating));
 
 export default router;
