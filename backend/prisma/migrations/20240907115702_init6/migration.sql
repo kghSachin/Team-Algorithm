@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "Place" ALTER COLUMN "photo" SET NOT NULL,
-ALTER COLUMN "photo" SET DATA TYPE TEXT;

@@ -36,7 +36,7 @@ export const createPlaceListing = async (
     message: "Place successfully created",
     status: "success",
   };
-  return res.status(201).json("hi");
+  return res.status(201).json(returnResponse);
 };
 export const createTareaListing = async (
   req: Request,
@@ -50,7 +50,9 @@ export const createTareaListing = async (
   const placeId = Number(req.params.id);
   const files = req.files as Express.Multer.File[];
 
-  const { name, description, latitude, longitude } = req.body;
+  const { name, description } = req.body;
+  const latitude = parseFloat(req.body.latitude);
+  const longitude = parseFloat(req.body.longitude);
 
   const localFilePaths = files.map((file) => file.path);
   const photos = files.map((file) => file.path);

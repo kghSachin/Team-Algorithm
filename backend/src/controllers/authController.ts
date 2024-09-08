@@ -15,7 +15,7 @@ export const login = async (
   const { email, password, role } = req.body;
   let returnResponse: IReturnResponse;
   let user;
-  if (role === "TOURIST") {
+  if (role === "TOURIST" || role === "ADMIN") {
     user = await prisma.tourist.findUnique({ where: { email } });
   } else if (role === "GUIDE") {
     user = await prisma.guide.findUnique({ where: { email } });
