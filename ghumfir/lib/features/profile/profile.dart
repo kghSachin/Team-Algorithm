@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ghumfir/features/profile/docs_page.dart';
+import 'package:ghumfir/features/profile/guide_profile.dart';
 import 'package:ghumfir/features/profile/widgets/list_widet.dart';
 import 'package:ghumfir/features/profile/widgets/prefered_sized.dart';
 import 'package:ghumfir/res/strings.dart';
@@ -89,7 +90,13 @@ class AccountScreen extends ConsumerWidget {
                   ListItem(
                       title: "Personal Details",
                       avatarText: imageStrings.personalDetail,
-                      onTap: () {}),
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => GuideProfile(
+                                  imageUrl: guideImageLink[0],
+                                  title: "Sachin Banset",
+                                )));
+                      }),
                   ListItem(
                       title: "Customer Service",
                       avatarText: imageStrings.customerService,

@@ -6,9 +6,9 @@ import 'package:collection/collection.dart';
 class FamousPlaceModel {
   final String name;
   final String description;
-  final String latitude;
-  final String longitude;
-  final String rating;
+  final double latitude;
+  final double longitude;
+  final int rating;
   final String review;
   final List<String> photo;
   FamousPlaceModel({
@@ -24,9 +24,9 @@ class FamousPlaceModel {
   FamousPlaceModel copyWith({
     String? name,
     String? description,
-    String? latitude,
-    String? longitude,
-    String? rating,
+    double? latitude,
+    double? longitude,
+    int? rating,
     String? review,
     List<String>? photo,
   }) {
@@ -57,9 +57,9 @@ class FamousPlaceModel {
     return FamousPlaceModel(
       name: map['name'] as String,
       description: map['description'] as String,
-      latitude: map['latitude'] as String,
-      longitude: map['longitude'] as String,
-      rating: map['rating'] as String,
+      latitude: map['latitude'] as double,
+      longitude: map['longitude'] as double,
+      rating: map['rating'] as int,
       review: map['review'] as String,
       photo: List<String>.from(
         (map['photo'] as List<String>),
@@ -74,7 +74,7 @@ class FamousPlaceModel {
 
   @override
   String toString() {
-    return 'FamousPlace(name: $name, description: $description, latitude: $latitude, longitude: $longitude, rating: $rating, review: $review, photo: $photo)';
+    return 'FamousPlaceModel(name: $name, description: $description, latitude: $latitude, longitude: $longitude, rating: $rating, review: $review, photo: $photo)';
   }
 
   @override

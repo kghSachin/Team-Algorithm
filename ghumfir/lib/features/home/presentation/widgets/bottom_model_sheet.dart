@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:ghumfir/features/home/presentation/widgets/place_to_visit_widget.dart';
 import 'package:ghumfir/features/profile/guide_profile.dart';
 import 'package:ghumfir/themes/colors.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -32,12 +31,12 @@ class GuideShowWidget extends ConsumerWidget {
                   child: Row(
                     children: [
                       Container(
-                        height: 80,
-                        width: 80,
+                        height: 70,
+                        width: 70,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8),
                           child: CachedNetworkImage(
-                              imageUrl: photoList[index % 4],
+                              imageUrl: guideImageLink[index % 5],
                               fit: BoxFit.cover,
                               errorWidget: (context, url, error) {
                                 return Center(child: Icon(Icons.error));
@@ -74,7 +73,10 @@ class GuideShowWidget extends ConsumerWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (_) => GuideProfile()));
+                                  builder: (_) => GuideProfile(
+                                        imageUrl: guideImageLink[index % 5],
+                                        title: guideList[index % 5],
+                                      )));
                         },
                         child: Center(
                           child: Text("More Details"),
@@ -97,4 +99,12 @@ List<String> guideList = [
   "Sabin Shrestha",
   "Nabin Banu Tiwari",
   "Sumeet Shrestha",
+];
+
+List<String> guideImageLink = [
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyNcJXUzK-LC-8dIAff4UZNHOwddbyMdo9c6qlzhjJWBs5ps-331CnDQhum_5n63MNU8A&usqp=CAU",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQA6egjwnu74xqAgNjzL1jaCZz98tF5jUuYw&s",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4syribkNb9csmFvW7RKUfth3qcwApken8F-ntMoW0xT4smvmuXsh3exnGYczK9CpjdL4&usqp=CAU",
+  "https://res.cloudinary.com/tourhq/image/upload/c_fill,g_face,fl_progressive,h_498,q_auto,w_390/cdn11syfidaeqz37dccd",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6Bn-CGKeniMhgVJga1mYilGgxJJR7y3JpkWz_LgF4A4VAE-H4RndwRL0iuMdgJ9lIBmM&usqp=CAU"
 ];

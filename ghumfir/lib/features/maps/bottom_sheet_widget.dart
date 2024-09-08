@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ghumfir/features/home/presentation/place_detail_view.dart';
+import 'package:ghumfir/res/dharan_places.dart';
 
 class MapInfoBottomSheet extends StatelessWidget {
   const MapInfoBottomSheet({super.key});
@@ -67,7 +68,9 @@ class MapInfoBottomSheet extends StatelessWidget {
           MaterialButton(
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return PlaceDetailView();
+                return PlaceDetailView(
+                  myList: myList[0],
+                );
               }));
             },
             child: SizedBox(

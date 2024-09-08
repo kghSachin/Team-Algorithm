@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+// import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:ghumfir/res/dharan_places.dart';
 
 class PlaceToVisitContainer extends StatelessWidget {
   final int index;
@@ -32,7 +35,7 @@ class PlaceToVisitContainer extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: CachedNetworkImage(
-              imageUrl: photoList[index % 4],
+              imageUrl: myList[index % 3].photo[0],
               fit: BoxFit.cover,
               height: 90,
               width: double.maxFinite,
@@ -45,7 +48,7 @@ class PlaceToVisitContainer extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Text(
-              nameList[index % 4],
+              myList[index % 4].name,
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
@@ -71,7 +74,7 @@ class PlaceToVisitContainer extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 8),
             child: Text(
-              "157 reviews",
+              Random().nextInt(100).toString() + " Reviews",
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Colors.grey,
                   ),

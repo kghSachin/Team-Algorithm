@@ -12,11 +12,16 @@ class MyMapPage extends StatefulWidget {
 
 class _MyMapPageState extends State<MyMapPage> {
   final locations = const [
-    LatLng(37.42796133580664, -122.085749655962),
-    LatLng(37.41796133580664, -122.085749655962),
-    LatLng(37.43796133580664, -122.085749655962),
-    LatLng(37.42796133580664, -122.095749655962),
-    LatLng(37.42796133580664, -122.075749655962),
+    LatLng(26.4831, 87.28337),
+    LatLng(26.4831, 87.38337),
+    LatLng(26.4331, 86.29337),
+    LatLng(26.4881, 87.20337),
+    LatLng(26.4801, 87.28337),
+    LatLng(26.4851, 87.26337),
+    LatLng(26.4801, 87.29337),
+    LatLng(26.4211, 87.28337),
+    LatLng(26.4841, 87.24337),
+    LatLng(26.4211, 87.38337),
   ];
 
   late List<MarkerData> _customMarkers;
@@ -73,7 +78,7 @@ class _MyMapPageState extends State<MyMapPage> {
                 myLocationButtonEnabled: true,
                 myLocationEnabled: true,
                 initialCameraPosition: const CameraPosition(
-                  target: LatLng(37.42796133580664, -122.085749655962),
+                  target: LatLng(26.4801, 87.28337),
                   zoom: 14.4746,
                 ),
                 markers: markers,

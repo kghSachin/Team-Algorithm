@@ -1,8 +1,16 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:ghumfir/themes/colors.dart';
 
 class GuideProfile extends StatefulWidget {
-  const GuideProfile({super.key});
+  final String title;
+  final String imageUrl;
+  const GuideProfile({
+    Key? key,
+    required this.title,
+    required this.imageUrl,
+  }) : super(key: key);
 
   @override
   State<GuideProfile> createState() => _GuideProfileState();
@@ -13,7 +21,7 @@ class _GuideProfileState extends State<GuideProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Guide Profile'),
+        title: const Text('Profile'),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -23,17 +31,17 @@ class _GuideProfileState extends State<GuideProfile> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const Center(
+                Center(
                   child: Column(
                     children: [
                       CircleAvatar(
                         radius: 50,
-                        backgroundImage: CachedNetworkImageProvider(
-                            'https://scontent.fktm6-1.fna.fbcdn.net/v/t39.30808-6/271269794_5035176696512769_8335203137685433811_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFQWMg2NzdFEXKVfRqybxiuHX5INkpc9uYdfkg2Slz25rgG5d2qTWhrCIxkPXBIoQjRz_R7DH5D0r5sgRw-bXnk&_nc_ohc=i5BJuyMzj9oQ7kNvgEQODZ1&_nc_ht=scontent.fktm6-1.fna&_nc_gid=ADKcU1T-j39YaaFO6FMZgOA&oh=00_AYDLtCRZp2IvAQNAZcjzpSfa9ZOMxxyKRN5Nz58SUzAXmQ&oe=66E22C82'),
+                        backgroundImage:
+                            CachedNetworkImageProvider(widget.imageUrl),
                       ),
                       SizedBox(height: 10),
                       Text(
-                        'Yuyutshu Banjara',
+                        widget.title,
                         style: TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold),
                       ),
@@ -42,13 +50,19 @@ class _GuideProfileState extends State<GuideProfile> {
                         'Local Guide',
                         style: TextStyle(color: Colors.grey),
                       ),
+                      SizedBox(height: 5),
+                      MaterialButton(
+                        color: AppColors.blue,
+                        onPressed: () {},
+                        child: Text("Hire"),
+                      )
                     ],
                   ),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                UserProfileRow(label: 'Name', value: 'Nabin Bu Tiwari'),
+                UserProfileRow(label: 'Name', value: widget.title),
                 const Divider(),
                 UserProfileRow(label: 'Rating', value: '4/5'),
                 const Divider(),
@@ -196,3 +210,11 @@ class BlogCard extends StatelessWidget {
     );
   }
 }
+
+List<String> guideImageLink = [
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyNcJXUzK-LC-8dIAff4UZNHOwddbyMdo9c6qlzhjJWBs5ps-331CnDQhum_5n63MNU8A&usqp=CAU",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQA6egjwnu74xqAgNjzL1jaCZz98tF5jUuYw&s",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4syribkNb9csmFvW7RKUfth3qcwApken8F-ntMoW0xT4smvmuXsh3exnGYczK9CpjdL4&usqp=CAU",
+  "https://res.cloudinary.com/tourhq/image/upload/c_fill,g_face,fl_progressive,h_498,q_auto,w_390/cdn11syfidaeqz37dccd",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6Bn-CGKeniMhgVJga1mYilGgxJJR7y3JpkWz_LgF4A4VAE-H4RndwRL0iuMdgJ9lIBmM&usqp=CAU"
+];

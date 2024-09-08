@@ -1,5 +1,7 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:ghumfir/features/home/model/faous_place_model.dart';
 import 'package:ghumfir/features/home/presentation/create_blog.dart';
 import 'package:ghumfir/features/home/presentation/widgets/place_to_visit_widget.dart';
 import 'package:ghumfir/res/info_string.dart';
@@ -8,7 +10,11 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class PlaceDetailView extends ConsumerWidget {
-  const PlaceDetailView({super.key});
+  final FamousPlaceModel myList;
+
+  const PlaceDetailView({
+    required this.myList,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -38,7 +44,7 @@ class PlaceDetailView extends ConsumerWidget {
                         ? 0.0
                         : 1.0,
                     child: Text(
-                      'Sani Mandir',
+                      myList.name,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
@@ -59,7 +65,7 @@ class PlaceDetailView extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "About Sani Mandir",
+                          "About ${myList.name}",
                           style: Theme.of(context)
                               .textTheme
                               .titleLarge
@@ -90,7 +96,7 @@ class PlaceDetailView extends ConsumerWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: Text(
-                biratInfo,
+                myList.description,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
@@ -102,7 +108,7 @@ class PlaceDetailView extends ConsumerWidget {
                 height: 200,
                 child: GoogleMap(
                   initialCameraPosition:
-                      CameraPosition(target: LatLng(27.167, 84.515), zoom: 12),
+                      CameraPosition(target: LatLng(27.167, 87.515), zoom: 12),
                 ),
               ),
             ),
@@ -114,7 +120,7 @@ class PlaceDetailView extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Blogs about Sani Mandir",
+                    "Blogs about ${myList.name}",
                     style: Theme.of(context)
                         .textTheme
                         .titleLarge

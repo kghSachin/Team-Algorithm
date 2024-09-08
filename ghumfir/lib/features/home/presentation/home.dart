@@ -5,14 +5,48 @@ import 'package:ghumfir/features/home/presentation/city_detail_view.dart';
 import 'package:ghumfir/features/home/presentation/widgets/city_widget.dart';
 import 'package:ghumfir/features/home/presentation/widgets/place_to_visit_widget.dart';
 import 'package:ghumfir/features/home/provider/get_place_provider.dart';
+import 'package:ghumfir/res/dharan_places.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class HomePage extends ConsumerWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _HomePageState();
+}
+
+class _HomePageState extends ConsumerState<HomePage> {
+  bool isLoaded = false;
+  search() {
+    try {
+      setState(() {
+        isLoaded = true;
+        print("loaded");
+        Future.delayed(Duration(milliseconds: 200)).then((value) {
+          setState(() {
+            isLoaded = false;
+          });
+        });
+      });
+    } catch (e) {
+      isLoaded = false;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final placeProvider = ref.watch(getPlacesProvider);
+
+    //     final searchController = useTextEditingController(text: searchQuery.state);
+
+    // // Update the query provider when the text in the input field changes
+    // useEffect(() {
+    //   searchController.addListener(() {
+    //     ref.read(searchQueryProvider.notifier).state = searchController.text;
+    //   });
+    //   return null;
+    // }, [searchController]);
+
     return Scaffold(
         body: placeProvider.when(data: (data) {
       return CustomScrollView(
@@ -72,29 +106,42 @@ class HomePage extends ConsumerWidget {
                 // Handle tap event
               },
               onChanged: (String value) {
-                // Handle text changes
+                print("change");
+                search();
               },
             ),
           )),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                    child: InkWell(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => CityDetailView()));
-                        },
-                        child: CityWidget(
-                          cityDescription: data?[index].location ?? "",
-                          cityName: data?[index].name ?? "",
-                          cityPhoto: data?[index].photo ?? "",
-                        )));
-              },
-              childCount: data?.length,
-            ),
-          ),
+          isLoaded
+              ? SliverToBoxAdapter(
+                  child: Center(
+                    child: SizedBox(
+                        height: 40,
+                        width: 40,
+                        child: CircularProgressIndicator()),
+                  ),
+                )
+              : SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      return Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 12),
+                          child: InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => CityDetailView(
+                                          myList: myList,
+                                        )));
+                              },
+                              child: CityWidget(
+                                cityDescription: data?[index].location ?? "",
+                                cityName: data?[index].name ?? "",
+                                cityPhoto: data?[index].photo ?? "",
+                              )));
+                    },
+                    childCount: data?.length,
+                  ),
+                ),
           //
         ],
       );
