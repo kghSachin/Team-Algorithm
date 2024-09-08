@@ -40,6 +40,8 @@ model TouristArea {
   place       Place    @relation(fields: [placeId], references: [id])
   placeId     Int
   Rating      Rating[]
+  latitude    Float
+  longitude   Float
   blogs       Blog[]
 }
 

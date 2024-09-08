@@ -8,6 +8,9 @@ export const submitRating = async (
   next: NextFunction
 ) => {
   try {
+    if (req.user.role != "TOURIST") {
+      return next(createHttpError(401, "unauthorized"));
+    }
     const newRating = await prisma.rating.create({
       data: {
         ...req.body,
