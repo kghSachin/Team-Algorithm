@@ -5,11 +5,17 @@ Gumfir in an app which can be revolution in tourism sector. Ghumfir is a platfor
 Steps to run the project:
 clone the project
 frontend: 
+
     1.Navigate to ghumfir directory.
+
     2.Open terminal and enter "flutter pub get"
+
     3.And then enter "flutter run"
+
 backend:
     1. Navigate to backend directory.
+
     2. fill .env.sample for database(postgresql) and cloudinary 
+    
     3. npm run server (make sure to have node installed.)
     
