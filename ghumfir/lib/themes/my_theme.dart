@@ -8,9 +8,9 @@ class AppTheme {
         primarySwatch: AppColors.blueSwatch,
         scaffoldBackgroundColor: AppColors.white,
         appBarTheme: AppBarTheme(
-          color: AppColors.blueSwatch.shade500,
-          iconTheme: IconThemeData(color: AppColors.white),
-        ),
+            color: AppColors.blueSwatch.shade500,
+            iconTheme: IconThemeData(color: AppColors.white),
+            titleTextStyle: TextStyle(color: Colors.white, fontSize: 22)),
         colorScheme: ColorScheme.light(
           primary: AppColors.blueSwatch.shade500,
           secondary: AppColors.blueSwatch.shade700,
@@ -19,6 +19,23 @@ class AppTheme {
           buttonColor: AppColors.blueSwatch.shade500,
           textTheme: ButtonTextTheme.primary,
         ),
+        searchBarTheme: SearchBarThemeData(
+          hintStyle: WidgetStateProperty.all(
+            TextStyle(color: Colors.grey[400]),
+          ),
+          padding: WidgetStateProperty.all(
+            EdgeInsets.symmetric(horizontal: 16),
+          ),
+          elevation: WidgetStateProperty.all(4),
+          backgroundColor: WidgetStateProperty.all(Colors.white),
+          shape: WidgetStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+              side: BorderSide(color: Colors.grey[300]!),
+            ),
+          ),
+        ),
+
         //outline button theme
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: ButtonStyle(

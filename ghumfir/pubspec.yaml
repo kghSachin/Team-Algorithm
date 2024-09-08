@@ -37,6 +37,14 @@ dependencies:
   flutter_svg: ^2.0.10+1
   riverpod: ^2.5.1
   hooks_riverpod: ^2.5.2
+  flutter_rating_bar: ^4.0.1
+  cached_network_image: ^3.4.1
+  google_fonts: ^6.2.1
+  google_maps_flutter: ^2.9.0
+  custom_map_markers: ^0.0.2+1
+  flutter_staggered_grid_view: ^0.7.0
+  file_picker: ^8.1.2
+  http: ^1.2.2
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +72,7 @@ flutter:
     - assets/icons/navbar/
     - assets/images/
     - assets/icons/
+    - assets/icons/profile/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
